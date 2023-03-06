@@ -10,6 +10,11 @@ namespace carpoolBG.Data
         {
         }
 
+        public CarpoolContext()
+        {
+            
+        }
+
         public DbSet<User> Users { get; set; }
 
         public DbSet<Rating> Ratings { get; set; }
@@ -30,6 +35,18 @@ namespace carpoolBG.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            builder.Entity<Ride>().HasOne(r => r.RideRequest).WithOne(c => c.Ride);
+            builder.Entity<Ride>().HasOne(l => l.DropOffLocation).WithOne(r => r.Ride);
+            builder.Entity<Ride>().HasOne(l => l.PickUpLocation).WithOne(r => r.Ride);
+
+            builder.Entity<User>().HasMany(r => r.Rides).WithOne(u => u.Passenger).HasForeignKey(p =>p.PassengerId);
+            builder.Entity<User>().HasMany(r => r.Rides).WithOne(u => u.Driver).HasForeignKey(p => p.DriverId); ;
+
+            builder.Entity<User>().HasMany(r => r.ReceivedRatings).WithOne(u => u.ReceivedBy).HasForeignKey(s=>s.ReceivedById);
+            builder.Entity<User>().HasMany(r => r.ReceivedRatings).WithOne(u => u.PostedBy).HasForeignKey(s=>s.PostedById);
+
+            builder.Entity<User>().HasOne(p => p.Preferences).WithOne(u => u.User);
         }
     }
 }
