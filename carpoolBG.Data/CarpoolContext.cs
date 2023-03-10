@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace carpoolBG.Data
 {
-    public class CarpoolContext : IdentityDbContext
+    public class CarpoolContext : DbContext
     {
         public CarpoolContext(DbContextOptions options) : base(options)
         {
@@ -37,14 +37,14 @@ namespace carpoolBG.Data
             base.OnModelCreating(builder);
 
             builder.Entity<Ride>().HasOne(r => r.RideRequest).WithOne(c => c.Ride);
-            builder.Entity<Ride>().HasOne(l => l.DropOffLocation).WithOne(r => r.Ride);
-            builder.Entity<Ride>().HasOne(l => l.PickUpLocation).WithOne(r => r.Ride);
+            builder.Entity<Ride>().HasOne(l => l.DropOffLocation).WithOne(r => r.RideDropOff);
+            builder.Entity<Ride>().HasOne(l => l.PickUpLocation).WithOne(r => r.RidePickUp);
 
-            builder.Entity<CarpoolUser>().HasMany(r => r.Rides).WithOne(u => u.Passenger).HasForeignKey(p =>p.PassengerId);
-            builder.Entity<CarpoolUser>().HasMany(r => r.Rides).WithOne(u => u.Driver).HasForeignKey(p => p.DriverId); ;
+            builder.Entity<CarpoolUser>().HasMany(r => r.RidesPassenger).WithOne(u => u.Passenger).HasForeignKey(p =>p.PassengerId);
+            builder.Entity<CarpoolUser>().HasMany(r => r.RidesDriver).WithOne(u => u.Driver).HasForeignKey(p => p.DriverId); ;
 
             builder.Entity<CarpoolUser>().HasMany(r => r.ReceivedRatings).WithOne(u => u.ReceivedBy).HasForeignKey(s=>s.ReceivedById);
-            builder.Entity<CarpoolUser>().HasMany(r => r.ReceivedRatings).WithOne(u => u.PostedBy).HasForeignKey(s=>s.PostedById);
+            builder.Entity<CarpoolUser>().HasMany(r => r.PostedRatings).WithOne(u => u.PostedBy).HasForeignKey(s=>s.PostedById);
 
             builder.Entity<CarpoolUser>().HasOne(p => p.Preferences).WithOne(u => u.User);
             builder.Entity<Passenger>().HasMany(l => l.SavedLocations).WithOne(p => p.Passenger);

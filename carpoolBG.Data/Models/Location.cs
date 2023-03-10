@@ -24,7 +24,8 @@ namespace carpoolBG.Models
         [Column("LONGITUDE")]
         public double Longitude { get; set; }
 
-        public Ride Ride { get; set; }
+        public Ride RidePickUp { get; set; }
+        public Ride RideDropOff { get; set; }
 
         public Passenger Passenger{ get; set; }
     }

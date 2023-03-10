@@ -9,6 +9,6 @@
 
         public List<byte[]> Documents { get; set; }
 
-        public decimal Balancer { get; set; }
+        public decimal Balance { get; set; }
     }
 }
