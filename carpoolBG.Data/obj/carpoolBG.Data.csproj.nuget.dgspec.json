@@ -28,8 +28,8 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "C:\\Users\\kaloy\\source\\repos\\carpoolBG\\carpoolBG\\carpoolBG.csproj": {
-                "projectPath": "C:\\Users\\kaloy\\source\\repos\\carpoolBG\\carpoolBG\\carpoolBG.csproj"
+              "C:\\Users\\kaloy\\source\\repos\\carpoolBG\\carpoolBG.Models\\carpoolBG.Models.csproj": {
+                "projectPath": "C:\\Users\\kaloy\\source\\repos\\carpoolBG\\carpoolBG.Models\\carpoolBG.Models.csproj"
               }
             }
           }
@@ -56,9 +56,19 @@
               "target": "Package",
               "version": "[7.0.3, )"
             },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[7.0.3, )"
+            },
             "Microsoft.Identity.Web": {
               "target": "Package",
               "version": "[1.16.0, )"
+            },
+            "MySql.Data": {
+              "target": "Package",
+              "version": "[8.0.32.1, )"
             }
           },
           "imports": [
@@ -81,14 +91,14 @@
         }
       }
     },
-    "C:\\Users\\kaloy\\source\\repos\\carpoolBG\\carpoolBG\\carpoolBG.csproj": {
+    "C:\\Users\\kaloy\\source\\repos\\carpoolBG\\carpoolBG.Models\\carpoolBG.Models.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\kaloy\\source\\repos\\carpoolBG\\carpoolBG\\carpoolBG.csproj",
-        "projectName": "carpoolBG",
-        "projectPath": "C:\\Users\\kaloy\\source\\repos\\carpoolBG\\carpoolBG\\carpoolBG.csproj",
+        "projectUniqueName": "C:\\Users\\kaloy\\source\\repos\\carpoolBG\\carpoolBG.Models\\carpoolBG.Models.csproj",
+        "projectName": "carpoolBG.Models",
+        "projectPath": "C:\\Users\\kaloy\\source\\repos\\carpoolBG\\carpoolBG.Models\\carpoolBG.Models.csproj",
         "packagesPath": "C:\\Users\\kaloy\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\kaloy\\source\\repos\\carpoolBG\\carpoolBG\\obj\\",
+        "outputPath": "C:\\Users\\kaloy\\source\\repos\\carpoolBG\\carpoolBG.Models\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\kaloy\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -117,37 +127,23 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "dependencies": {
-            "Microsoft.AspNetCore.Authentication.JwtBearer": {
-              "target": "Package",
-              "version": "[7.0.3, )"
-            },
-            "Microsoft.AspNetCore.Authentication.OpenIdConnect": {
-              "target": "Package",
-              "version": "[7.0.3, )"
-            },
-            "Microsoft.AspNetCore.Identity": {
-              "target": "Package",
-              "version": "[2.2.0, )"
-            },
-            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
-              "target": "Package",
-              "version": "[7.0.3, )"
-            },
-            "Microsoft.AspNetCore.OpenApi": {
-              "target": "Package",
-              "version": "[7.0.3, )"
-            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[7.0.3, )"
             },
-            "Microsoft.Identity.Web": {
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
               "target": "Package",
-              "version": "[1.16.0, )"
+              "version": "[7.0.3, )"
             },
-            "Swashbuckle.AspNetCore": {
+            "Microsoft.Extensions.Identity.Stores": {
               "target": "Package",
-              "version": "[6.4.0, )"
+              "version": "[7.0.3, )"
+            },
+            "MySql.Data": {
+              "target": "Package",
+              "version": "[8.0.32.1, )"
             }
           },
           "imports": [
@@ -162,9 +158,6 @@
           "assetTargetFallback": true,
           "warn": true,
           "frameworkReferences": {
-            "Microsoft.AspNetCore.App": {
-              "privateAssets": "none"
-            },
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }

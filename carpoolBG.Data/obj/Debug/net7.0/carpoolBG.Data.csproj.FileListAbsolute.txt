@@ -1,0 +1,17 @@
+C:\Users\kaloy\source\repos\carpoolBG\carpoolBG.Data\bin\Debug\net7.0\carpoolBG.Data.deps.json
+C:\Users\kaloy\source\repos\carpoolBG\carpoolBG.Data\bin\Debug\net7.0\carpoolBG.Data.dll
+C:\Users\kaloy\source\repos\carpoolBG\carpoolBG.Data\bin\Debug\net7.0\carpoolBG.Data.pdb
+C:\Users\kaloy\source\repos\carpoolBG\carpoolBG.Data\bin\Debug\net7.0\carpoolBG.Models.dll
+C:\Users\kaloy\source\repos\carpoolBG\carpoolBG.Data\bin\Debug\net7.0\carpoolBG.Models.pdb
+C:\Users\kaloy\source\repos\carpoolBG\carpoolBG.Data\obj\Debug\net7.0\carpoolBG.Data.csproj.AssemblyReference.cache
+C:\Users\kaloy\source\repos\carpoolBG\carpoolBG.Data\obj\Debug\net7.0\carpoolBG.Data.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\kaloy\source\repos\carpoolBG\carpoolBG.Data\obj\Debug\net7.0\carpoolBG.Data.AssemblyInfoInputs.cache
+C:\Users\kaloy\source\repos\carpoolBG\carpoolBG.Data\obj\Debug\net7.0\carpoolBG.Data.AssemblyInfo.cs
+C:\Users\kaloy\source\repos\carpoolBG\carpoolBG.Data\obj\Debug\net7.0\carpoolBG.Data.csproj.CoreCompileInputs.cache
+C:\Users\kaloy\source\repos\carpoolBG\carpoolBG.Data\obj\Debug\net7.0\carpoolBG.Data.csproj.CopyComplete
+C:\Users\kaloy\source\repos\carpoolBG\carpoolBG.Data\obj\Debug\net7.0\carpoolBG.Data.dll
+C:\Users\kaloy\source\repos\carpoolBG\carpoolBG.Data\obj\Debug\net7.0\refint\carpoolBG.Data.dll
+C:\Users\kaloy\source\repos\carpoolBG\carpoolBG.Data\obj\Debug\net7.0\carpoolBG.Data.pdb
+C:\Users\kaloy\source\repos\carpoolBG\carpoolBG.Data\obj\Debug\net7.0\ref\carpoolBG.Data.dll
+C:\Users\kaloy\source\repos\carpoolBG\carpoolBG.Data\bin\Debug\net7.0\carpoolBG.Data.runtimeconfig.json
+C:\Users\kaloy\source\repos\carpoolBG\carpoolBG.Data\obj\Debug\net7.0\carpoolBG.Data.genruntimeconfig.cache
