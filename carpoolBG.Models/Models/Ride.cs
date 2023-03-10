@@ -27,14 +27,14 @@ namespace carpoolBG.Models
         [ForeignKey("DRIVER")]
         [Required]
         public string DriverId { get; set; }
-        public User Driver { get; set; }
+        public CarpoolUser Driver { get; set; }
 
 
         [Column("PASSENGER_ID")]
         [ForeignKey("PASSENGER")]
         [Required]
         public string PassengerId { get; set; }
-        public User Passenger { get; set; }
+        public CarpoolUser Passenger { get; set; }
 
         [Column("PICK_UP_LOCATION_ID")]
         [ForeignKey("PICK_UP_LOCATION")]

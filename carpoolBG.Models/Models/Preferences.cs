@@ -35,7 +35,7 @@ namespace carpoolBG.Models
         [Column("LATEST_ARRIVAL_TIME")]
         public DateTime LatestArrivalTime { get; set; }
 
-        public User User { get; set; }
+        public CarpoolUser User { get; set; }
 
         [Required]
         [ForeignKey("USER")]

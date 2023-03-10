@@ -27,13 +27,13 @@ namespace carpoolBG.Models
         [ForeignKey("POSTED_BY")]
         [Column("POSTED_BY_ID")]
         public string PostedById { get; set; }
-        public User PostedBy { get; set; }
+        public CarpoolUser PostedBy { get; set; }
 
         [Required]
         [ForeignKey("RECEIVED_BY")]
         [Column("RECEIVED_BY_ID")]
-        public string RceivedById { get; set; }
-        public User ReceivedBy { get; set; }
+        public string ReceivedById { get; set; }
+        public CarpoolUser ReceivedBy { get; set; }
 
         [Column("TIME_POSTED")]
         [Required]

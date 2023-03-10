@@ -1,12 +1,20 @@
 ﻿using carpoolBG.Models.Enums;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace carpoolBG.Models
 {
-    public class User : IdentityUser
+    public class CarpoolUser : IdentityUser<string>
     {
+        public CarpoolUser()
+        {
+            this.Id = Guid.NewGuid().ToString();
+            this.Rides = new List<Ride>();
+            this.ReceivedRatings = new List<Rating>();
+        }
+
         [Key]
         [Required]
         [Column("ID")]
@@ -25,10 +33,6 @@ namespace carpoolBG.Models
         public Sex Sex { get; set; }
 
         [Required]
-        [Column("EMAIL")]
-        public string Email { get; set; }
-
-        [Required]
         [Column("LOCATION")]
         public Location Location { get; set; }
 
@@ -43,10 +47,6 @@ namespace carpoolBG.Models
         [Required]
         [Column("LAST_NAME")]
         public string LastName { get; set; }
-
-        [Required]
-        [Column("PHONE_NUMBER")]
-        public string PhoneNumber { get; set; }
 
         [Required]
         [Column("USER_TYPE")]

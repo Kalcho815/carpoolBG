@@ -15,7 +15,7 @@ namespace carpoolBG.Data
             
         }
 
-        public DbSet<User> Users { get; set; }
+        public DbSet<CarpoolUser> CarpoolUsers { get; set; }
 
         public DbSet<Rating> Ratings { get; set; }
 
@@ -40,13 +40,14 @@ namespace carpoolBG.Data
             builder.Entity<Ride>().HasOne(l => l.DropOffLocation).WithOne(r => r.Ride);
             builder.Entity<Ride>().HasOne(l => l.PickUpLocation).WithOne(r => r.Ride);
 
-            builder.Entity<User>().HasMany(r => r.Rides).WithOne(u => u.Passenger).HasForeignKey(p =>p.PassengerId);
-            builder.Entity<User>().HasMany(r => r.Rides).WithOne(u => u.Driver).HasForeignKey(p => p.DriverId); ;
+            builder.Entity<CarpoolUser>().HasMany(r => r.Rides).WithOne(u => u.Passenger).HasForeignKey(p =>p.PassengerId);
+            builder.Entity<CarpoolUser>().HasMany(r => r.Rides).WithOne(u => u.Driver).HasForeignKey(p => p.DriverId); ;
 
-            builder.Entity<User>().HasMany(r => r.ReceivedRatings).WithOne(u => u.ReceivedBy).HasForeignKey(s=>s.ReceivedById);
-            builder.Entity<User>().HasMany(r => r.ReceivedRatings).WithOne(u => u.PostedBy).HasForeignKey(s=>s.PostedById);
+            builder.Entity<CarpoolUser>().HasMany(r => r.ReceivedRatings).WithOne(u => u.ReceivedBy).HasForeignKey(s=>s.ReceivedById);
+            builder.Entity<CarpoolUser>().HasMany(r => r.ReceivedRatings).WithOne(u => u.PostedBy).HasForeignKey(s=>s.PostedById);
 
-            builder.Entity<User>().HasOne(p => p.Preferences).WithOne(u => u.User);
+            builder.Entity<CarpoolUser>().HasOne(p => p.Preferences).WithOne(u => u.User);
+            builder.Entity<Passenger>().HasMany(l => l.SavedLocations).WithOne(p => p.Passenger);
         }
     }
 }

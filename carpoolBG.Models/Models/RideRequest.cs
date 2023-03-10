@@ -28,7 +28,7 @@ namespace carpoolBG.Models
         public string PickUpLocationId { get; set; }
         public Location PickUpLocation { get; set; }
 
-        public User RequestedBy { get; set; }
+        public CarpoolUser RequestedBy { get; set; }
 
         [Column("ACCEPTED")]
         [Required]
