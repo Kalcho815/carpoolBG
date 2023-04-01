@@ -2,7 +2,7 @@
 
 namespace carpoolBG.Models
 {
-    public class UserRole : IdentityRole<string>
+    public class UserRole : IdentityRole
     {
     }
 }

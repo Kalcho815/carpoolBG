@@ -11,8 +11,8 @@ using carpoolBG.Data;
 namespace carpoolBG.Data.Migrations
 {
     [DbContext(typeof(CarpoolContext))]
-    [Migration("20230310220855_Initial")]
-    partial class Initial
+    [Migration("20230401171054_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -22,45 +22,77 @@ namespace carpoolBG.Data.Migrations
                 .HasAnnotation("ProductVersion", "7.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("carpoolBG.Models.CarpoolUser", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("varchar(255)")
-                        .HasColumnName("ID");
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex");
+
+                    b.ToTable("AspNetRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("RoleId")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(255)");
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<bool>("Active")
-                        .HasColumnType("tinyint(1)")
-                        .HasColumnName("ACTIVE");
-
                     b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
                         .HasColumnType("longtext");
 
-                    b.Property<DateTime>("DateOfBirth")
-                        .HasColumnType("datetime(6)")
-                        .HasColumnName("DATE_OF_BIRTH");
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Email")
-                        .HasColumnType("longtext");
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar(256)");
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("tinyint(1)");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("longtext")
-                        .HasColumnName("FIRST_NAME");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("longtext")
-                        .HasColumnName("LAST_NAME");
-
-                    b.Property<string>("LocationId")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("tinyint(1)");
@@ -69,10 +101,12 @@ namespace carpoolBG.Data.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("NormalizedEmail")
-                        .HasColumnType("longtext");
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar(256)");
 
                     b.Property<string>("NormalizedUserName")
-                        .HasColumnType("longtext");
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar(256)");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("longtext");
@@ -86,27 +120,106 @@ namespace carpoolBG.Data.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("longtext");
 
-                    b.Property<int>("Sex")
-                        .HasColumnType("int")
-                        .HasColumnName("SEX");
-
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("tinyint(1)");
 
                     b.Property<string>("UserName")
-                        .HasColumnType("longtext");
-
-                    b.Property<int>("UserType")
-                        .HasColumnType("int")
-                        .HasColumnName("USER_TYPE");
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar(256)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("LocationId");
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
 
-                    b.ToTable("CarpoolUsers");
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex");
 
-                    b.UseTptMappingStrategy();
+                    b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
+
+                    b.UseTphMappingStrategy();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("RoleId")
+                        .HasColumnType("varchar(255)");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("longtext");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens", (string)null);
                 });
 
             modelBuilder.Entity("carpoolBG.Models.Location", b =>
@@ -124,7 +237,6 @@ namespace carpoolBG.Data.Migrations
                         .HasColumnName("LONGITUDE");
 
                     b.Property<string>("PassengerId")
-                        .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.HasKey("Id");
@@ -302,7 +414,6 @@ namespace carpoolBG.Data.Migrations
                         .HasColumnName("PICK_UP_LOCATION_ID");
 
                     b.Property<string>("RequestedById")
-                        .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.Property<DateTime>("TimeMade")
@@ -320,31 +431,109 @@ namespace carpoolBG.Data.Migrations
                     b.ToTable("RIDE_REQUESTS");
                 });
 
-            modelBuilder.Entity("carpoolBG.Models.Passenger", b =>
-                {
-                    b.HasBaseType("carpoolBG.Models.CarpoolUser");
-
-                    b.ToTable("PASSENGERS");
-                });
-
             modelBuilder.Entity("carpoolBG.Models.CarpoolUser", b =>
                 {
-                    b.HasOne("carpoolBG.Models.Location", "Location")
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("tinyint(1)")
+                        .HasColumnName("ACTIVE");
+
+                    b.Property<decimal>("Balance")
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("BALANCE");
+
+                    b.Property<DateTime>("DateOfBirth")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("DATE_OF_BIRTH");
+
+                    b.Property<byte[]>("Documents")
+                        .HasColumnType("longblob")
+                        .HasColumnName("DOCUMENTS");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("longtext")
+                        .HasColumnName("FIRST_NAME");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("longtext")
+                        .HasColumnName("LAST_NAME");
+
+                    b.Property<string>("LocationId")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<int>("Sex")
+                        .HasColumnType("int")
+                        .HasColumnName("SEX");
+
+                    b.Property<int>("UserType")
+                        .HasColumnType("int")
+                        .HasColumnName("USER_TYPE");
+
+                    b.HasIndex("LocationId");
+
+                    b.HasDiscriminator().HasValue("CarpoolUser");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
                         .WithMany()
-                        .HasForeignKey("LocationId")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Location");
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("carpoolBG.Models.Location", b =>
                 {
-                    b.HasOne("carpoolBG.Models.Passenger", "Passenger")
+                    b.HasOne("carpoolBG.Models.CarpoolUser", "Passenger")
                         .WithMany("SavedLocations")
-                        .HasForeignKey("PassengerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PassengerId");
 
                     b.Navigation("Passenger");
                 });
@@ -438,9 +627,7 @@ namespace carpoolBG.Data.Migrations
 
                     b.HasOne("carpoolBG.Models.CarpoolUser", "RequestedBy")
                         .WithMany()
-                        .HasForeignKey("RequestedById")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RequestedById");
 
                     b.Navigation("DropOffLocation");
 
@@ -449,27 +636,15 @@ namespace carpoolBG.Data.Migrations
                     b.Navigation("RequestedBy");
                 });
 
-            modelBuilder.Entity("carpoolBG.Models.Passenger", b =>
-                {
-                    b.HasOne("carpoolBG.Models.CarpoolUser", null)
-                        .WithOne()
-                        .HasForeignKey("carpoolBG.Models.Passenger", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("carpoolBG.Models.CarpoolUser", b =>
                 {
-                    b.Navigation("PostedRatings");
-
-                    b.Navigation("Preferences")
+                    b.HasOne("carpoolBG.Models.Location", "Location")
+                        .WithMany()
+                        .HasForeignKey("LocationId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("ReceivedRatings");
-
-                    b.Navigation("RidesDriver");
-
-                    b.Navigation("RidesPassenger");
+                    b.Navigation("Location");
                 });
 
             modelBuilder.Entity("carpoolBG.Models.Location", b =>
@@ -486,8 +661,19 @@ namespace carpoolBG.Data.Migrations
                     b.Navigation("Ride");
                 });
 
-            modelBuilder.Entity("carpoolBG.Models.Passenger", b =>
+            modelBuilder.Entity("carpoolBG.Models.CarpoolUser", b =>
                 {
+                    b.Navigation("PostedRatings");
+
+                    b.Navigation("Preferences")
+                        .IsRequired();
+
+                    b.Navigation("ReceivedRatings");
+
+                    b.Navigation("RidesDriver");
+
+                    b.Navigation("RidesPassenger");
+
                     b.Navigation("SavedLocations");
                 });
 #pragma warning restore 612, 618

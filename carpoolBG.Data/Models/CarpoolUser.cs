@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 namespace carpoolBG.Models
 {
@@ -9,17 +10,16 @@ namespace carpoolBG.Models
     {
         public CarpoolUser()
         {
-            this.Id = Guid.NewGuid().ToString();
             this.RidesDriver = new List<Ride>();
             this.RidesPassenger = new List<Ride>();
             this.ReceivedRatings = new List<Rating>();
             this.PostedRatings = new List<Rating>();
+            this.SavedLocations = new List<Location>();
+            this.Location = new Location();
+            this.Preferences = new Preferences();
+            this.Documents = Array.Empty<byte>();    
         }
 
-        [Key]
-        [Required]
-        [Column("ID")]
-        public string Id { get; set; }
 
         [Required]
         [Column("DATE_OF_BIRTH")]
@@ -39,11 +39,11 @@ namespace carpoolBG.Models
 
         [Required]
         [Column("FIRST_NAME")]
-        public string FirstName { get; set; }
+        public string? FirstName { get; set; }
 
         [Required]
         [Column("LAST_NAME")]
-        public string LastName { get; set; }
+        public string? LastName { get; set; }
 
         [Required]
         [Column("USER_TYPE")]
@@ -52,6 +52,16 @@ namespace carpoolBG.Models
         [Required]
         [Column("ACTIVE")]
         public bool Active { get; set; }
+
+        [Column("SAVED_LOCATIONS")]
+        public List<Location> SavedLocations { get; set; }
+
+        [Column("DOCUMENTS")]
+        [AllowNull]
+        public byte[]? Documents { get; set; }
+
+        [Column("BALANCE")]
+        public decimal Balance { get; set; }
 
         public List<Ride> RidesDriver { get; set; }
         public List<Ride> RidesPassenger { get; set; }

@@ -27,6 +27,6 @@ namespace carpoolBG.Models
         public Ride RidePickUp { get; set; }
         public Ride RideDropOff { get; set; }
 
-        public Passenger Passenger{ get; set; }
+        public CarpoolUser Passenger{ get; set; }
     }
 }

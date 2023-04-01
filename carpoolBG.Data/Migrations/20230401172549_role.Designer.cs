@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using carpoolBG.Data;
 
@@ -10,9 +11,11 @@ using carpoolBG.Data;
 namespace carpoolBG.Data.Migrations
 {
     [DbContext(typeof(CarpoolContext))]
-    partial class CarpoolContextModelSnapshot : ModelSnapshot
+    [Migration("20230401172549_role")]
+    partial class role
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -66,6 +69,78 @@ namespace carpoolBG.Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetRoleClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("longtext");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("longtext");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex");
+
+                    b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -158,110 +233,6 @@ namespace carpoolBG.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
-                });
-
-            modelBuilder.Entity("carpoolBG.Models.CarpoolUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Active")
-                        .HasColumnType("tinyint(1)")
-                        .HasColumnName("ACTIVE");
-
-                    b.Property<decimal>("Balance")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("BALANCE");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime>("DateOfBirth")
-                        .HasColumnType("datetime(6)")
-                        .HasColumnName("DATE_OF_BIRTH");
-
-                    b.Property<byte[]>("Documents")
-                        .HasColumnType("longblob")
-                        .HasColumnName("DOCUMENTS");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(256)
-                        .HasColumnType("varchar(256)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("longtext")
-                        .HasColumnName("FIRST_NAME");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("longtext")
-                        .HasColumnName("LAST_NAME");
-
-                    b.Property<string>("LocationId")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256)
-                        .HasColumnType("varchar(256)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("varchar(256)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("longtext");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("longtext");
-
-                    b.Property<int>("Sex")
-                        .HasColumnType("int")
-                        .HasColumnName("SEX");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("varchar(256)");
-
-                    b.Property<int>("UserType")
-                        .HasColumnType("int")
-                        .HasColumnName("USER_TYPE");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("LocationId");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasDatabaseName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasDatabaseName("UserNameIndex");
-
-                    b.ToTable("AspNetUsers", (string)null);
                 });
 
             modelBuilder.Entity("carpoolBG.Models.Location", b =>
@@ -456,7 +427,6 @@ namespace carpoolBG.Data.Migrations
                         .HasColumnName("PICK_UP_LOCATION_ID");
 
                     b.Property<string>("RequestedById")
-                        .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.Property<DateTime>("TimeMade")
@@ -474,6 +444,53 @@ namespace carpoolBG.Data.Migrations
                     b.ToTable("RIDE_REQUESTS");
                 });
 
+            modelBuilder.Entity("carpoolBG.Models.CarpoolUser", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("tinyint(1)")
+                        .HasColumnName("ACTIVE");
+
+                    b.Property<decimal>("Balance")
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("BALANCE");
+
+                    b.Property<DateTime>("DateOfBirth")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("DATE_OF_BIRTH");
+
+                    b.Property<byte[]>("Documents")
+                        .HasColumnType("longblob")
+                        .HasColumnName("DOCUMENTS");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("longtext")
+                        .HasColumnName("FIRST_NAME");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("longtext")
+                        .HasColumnName("LAST_NAME");
+
+                    b.Property<string>("LocationId")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<int>("Sex")
+                        .HasColumnType("int")
+                        .HasColumnName("SEX");
+
+                    b.Property<int>("UserType")
+                        .HasColumnType("int")
+                        .HasColumnName("USER_TYPE");
+
+                    b.HasIndex("LocationId");
+
+                    b.HasDiscriminator().HasValue("CarpoolUser");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -485,7 +502,7 @@ namespace carpoolBG.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("carpoolBG.Models.CarpoolUser", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -494,7 +511,7 @@ namespace carpoolBG.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("carpoolBG.Models.CarpoolUser", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -509,7 +526,7 @@ namespace carpoolBG.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("carpoolBG.Models.CarpoolUser", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -518,22 +535,11 @@ namespace carpoolBG.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("carpoolBG.Models.CarpoolUser", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("carpoolBG.Models.CarpoolUser", b =>
-                {
-                    b.HasOne("carpoolBG.Models.Location", "Location")
-                        .WithMany()
-                        .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Location");
                 });
 
             modelBuilder.Entity("carpoolBG.Models.Location", b =>
@@ -634,15 +640,38 @@ namespace carpoolBG.Data.Migrations
 
                     b.HasOne("carpoolBG.Models.CarpoolUser", "RequestedBy")
                         .WithMany()
-                        .HasForeignKey("RequestedById")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RequestedById");
 
                     b.Navigation("DropOffLocation");
 
                     b.Navigation("PickUpLocation");
 
                     b.Navigation("RequestedBy");
+                });
+
+            modelBuilder.Entity("carpoolBG.Models.CarpoolUser", b =>
+                {
+                    b.HasOne("carpoolBG.Models.Location", "Location")
+                        .WithMany()
+                        .HasForeignKey("LocationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Location");
+                });
+
+            modelBuilder.Entity("carpoolBG.Models.Location", b =>
+                {
+                    b.Navigation("RideDropOff")
+                        .IsRequired();
+
+                    b.Navigation("RidePickUp")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("carpoolBG.Models.RideRequest", b =>
+                {
+                    b.Navigation("Ride");
                 });
 
             modelBuilder.Entity("carpoolBG.Models.CarpoolUser", b =>
@@ -659,20 +688,6 @@ namespace carpoolBG.Data.Migrations
                     b.Navigation("RidesPassenger");
 
                     b.Navigation("SavedLocations");
-                });
-
-            modelBuilder.Entity("carpoolBG.Models.Location", b =>
-                {
-                    b.Navigation("RideDropOff")
-                        .IsRequired();
-
-                    b.Navigation("RidePickUp")
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("carpoolBG.Models.RideRequest", b =>
-                {
-                    b.Navigation("Ride");
                 });
 #pragma warning restore 612, 618
         }
