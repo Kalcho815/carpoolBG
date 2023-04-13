@@ -16,24 +16,21 @@ namespace carpoolBG.Controllers
         }
 
         [HttpPost(Name = "PostRegisterUser")]
-        public async Task<IdentityResult> Post()
+        public async Task<IdentityResult> Post([FromQuery] string username, string email, string firstName, string lastName, string sex, string userType, DateOnly dateOfBirth
+            , [FromBody] string password)
         {
             var testUser = new CarpoolUser
             {
-                UserName = "FirstTest"
-                ,
-                Email = "FirstEmailTest"
-                ,
-                FirstName = "Ivan"
-                ,
-                LastName = "Ivanov"
-                ,
-                Sex = Models.Enums.Sex.Male
-                ,
-                UserType = Models.Enums.UserType.Passenger
+                UserName = username
+                , Email = email
+                , FirstName = firstName
+                , LastName = lastName
+                , Sex = Models.Enums.Sex.Male
+                , UserType = Models.Enums.UserType.Passenger
+                , DateOfBirth = DateTime.Parse(dateOfBirth.ToString())
             };
 
-            var result = await userManager.CreateAsync(testUser, "Ttestuser123!");
+            var result = await userManager.CreateAsync(testUser, password);
 
             return result;
         }

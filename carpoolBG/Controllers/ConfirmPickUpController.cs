@@ -7,19 +7,19 @@ namespace carpoolBG.Controllers
 {
     [Route("user/[controller]")]
     [ApiController]
-    public class MakeUserActiveController : ControllerBase
+    public class ConfirmPickUpController : ControllerBase
     {
         private readonly IHttpContextAccessor httpContext;
         private readonly CarpoolContext dbContext;
         private readonly string? username;
         private CarpoolUser user;
-        UserService userService;
+        RideService rideService;
 
-        public MakeUserActiveController(IHttpContextAccessor httpContext, CarpoolContext dbContext, UserService userService)
+        public ConfirmPickUpController(IHttpContextAccessor httpContext, CarpoolContext dbContext, RideService rideService)
         {
             this.httpContext = httpContext;
             this.dbContext = dbContext;
-            this.userService = userService;
+            this.rideService = rideService;
             this.username = httpContext.HttpContext.User.Identity.Name;
 
             if (username != null)
@@ -30,20 +30,28 @@ namespace carpoolBG.Controllers
             }
         }
 
-        [HttpPost(Name = "MakeUserActive")]
-        public string Post()
+        [HttpPost(Name = "ConfirmPickUp")]
+        public ActionResult Post(string rideRequestId)
         {
-            string result = null;
 
             if (user != null)
             {
-                result = userService.MakeUserActive(user);
+                if (user.UserType != Models.Enums.UserType.Driver)
+                {
+                    return Forbid("Access forbidden");
+                }
+
+                var confirmed = rideService.ConfirmPickUp(rideRequestId, user.Id);
+                if (confirmed)
+                {
+                    return Ok();
+                }
+                else
+                    return Forbid("Driver must be assigned to a ride to confirm pick up.");
             }
             else
-                result = "";
+                return Unauthorized("User not logged in");
 
-            return result;
         }
-
     }
 }

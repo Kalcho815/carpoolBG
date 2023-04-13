@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using carpoolBG.Data;
 
@@ -10,9 +11,11 @@ using carpoolBG.Data;
 namespace carpoolBG.Data.Migrations
 {
     [DbContext(typeof(CarpoolContext))]
-    partial class CarpoolContextModelSnapshot : ModelSnapshot
+    [Migration("20230404190922_changed time in preferences to timespan")]
+    partial class changedtimeinpreferencestotimespan
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -349,8 +352,9 @@ namespace carpoolBG.Data.Migrations
                         .HasColumnType("varchar(255)")
                         .HasColumnName("ID");
 
-                    b.Property<bool>("Completed")
-                        .HasColumnType("tinyint(1)")
+                    b.Property<string>("Completed")
+                        .IsRequired()
+                        .HasColumnType("longtext")
                         .HasColumnName("COMPLETED");
 
                     b.Property<string>("DriverId")

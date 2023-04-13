@@ -7,19 +7,19 @@ namespace carpoolBG.Controllers
 {
     [Route("user/[controller]")]
     [ApiController]
-    public class MakeUserActiveController : ControllerBase
+    public class CreateRideRequestController : ControllerBase
     {
         private readonly IHttpContextAccessor httpContext;
         private readonly CarpoolContext dbContext;
         private readonly string? username;
         private CarpoolUser user;
-        UserService userService;
+        RideService rideService;
 
-        public MakeUserActiveController(IHttpContextAccessor httpContext, CarpoolContext dbContext, UserService userService)
+        public CreateRideRequestController(IHttpContextAccessor httpContext, CarpoolContext dbContext, RideService rideService)
         {
             this.httpContext = httpContext;
             this.dbContext = dbContext;
-            this.userService = userService;
+            this.rideService = rideService;
             this.username = httpContext.HttpContext.User.Identity.Name;
 
             if (username != null)
@@ -30,19 +30,23 @@ namespace carpoolBG.Controllers
             }
         }
 
-        [HttpPost(Name = "MakeUserActive")]
-        public string Post()
+        [HttpPost(Name = "CreateRideRequest")]
+        public ActionResult<IEnumerable<RideRequest>> Post([FromQuery] double pickUpLat, double pickUpLong, double dropOffLat, double dropOffLong)
         {
-            string result = null;
+            string result = "";
 
             if (user != null)
             {
-                result = userService.MakeUserActive(user);
+                if(user.UserType != Models.Enums.UserType.Passenger)
+                {
+                    return Forbid("User must be of type driver!");
+                }
+                result = rideService.CreateRideRequest(user, pickUpLat, pickUpLong, dropOffLat, dropOffLong);
             }
             else
-                result = "";
+                return Unauthorized("User not logged in");
 
-            return result;
+            return Ok(result);
         }
 
     }

@@ -18,7 +18,7 @@ namespace carpoolBG.Models
         public string Id { get; set; }
 
         [Column("COMPLETED")]
-        public string Completed { get; set; }
+        public bool Completed { get; set; }
 
         [Column("TIME_OF_ACCEPTANCE")]
         public DateTime? TimeOfAcceptance { get; set; }

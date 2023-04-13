@@ -7,19 +7,19 @@ namespace carpoolBG.Controllers
 {
     [Route("user/[controller]")]
     [ApiController]
-    public class MakeUserActiveController : ControllerBase
+    public class AcceptRideRequestController : ControllerBase
     {
         private readonly IHttpContextAccessor httpContext;
         private readonly CarpoolContext dbContext;
         private readonly string? username;
         private CarpoolUser user;
-        UserService userService;
+        RideService rideService;
 
-        public MakeUserActiveController(IHttpContextAccessor httpContext, CarpoolContext dbContext, UserService userService)
+        public AcceptRideRequestController(IHttpContextAccessor httpContext, CarpoolContext dbContext, RideService rideService)
         {
             this.httpContext = httpContext;
             this.dbContext = dbContext;
-            this.userService = userService;
+            this.rideService = rideService;
             this.username = httpContext.HttpContext.User.Identity.Name;
 
             if (username != null)
@@ -29,20 +29,24 @@ namespace carpoolBG.Controllers
                     .FirstOrDefault();
             }
         }
-
-        [HttpPost(Name = "MakeUserActive")]
-        public string Post()
+        //TODO: Drivers cannot make ride requests
+        [HttpPost(Name = "AcceptRideRequest")]
+        public ActionResult<IEnumerable<RideRequest>> Post(string rideRequestId)
         {
-            string result = null;
+            string result = "";
 
             if (user != null)
             {
-                result = userService.MakeUserActive(user);
+                if(user.UserType != Models.Enums.UserType.Driver)
+                {
+                    return Forbid("Access forbidden");
+                }
+                rideService.AcceptRideRequest(rideRequestId, user.Id);
             }
             else
-                result = "";
+                return Unauthorized("User not logged in");
 
-            return result;
+            return Ok(result);
         }
 
     }

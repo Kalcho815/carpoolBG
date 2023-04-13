@@ -7,7 +7,7 @@ namespace carpoolBG.Services
     {
         private readonly CarpoolContext dbContext;
 
-        public UserService(CarpoolContext dbContext )
+        public UserService(CarpoolContext dbContext)
         {
             this.dbContext = dbContext;
         }

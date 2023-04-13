@@ -24,16 +24,16 @@ namespace carpoolBG.Models
         public int MaximumRange { get; set; }
 
         [Column("EARLIEST_DEPARTURE_TIME")]
-        public DateTime EarliestDepartureTime { get; set; }
+        public TimeSpan EarliestDepartureTime { get; set; }
 
         [Column("EARLIEST_ARRIVAL_TIME")]
-        public DateTime EarliestArrivalTime { get; set; }
+        public TimeSpan EarliestArrivalTime { get; set; }
 
         [Column("LATEST_DEPARTURE_TIME")]
-        public DateTime LatestDepartureTime { get; set; }
+        public TimeSpan LatestDepartureTime { get; set; }
 
         [Column("LATEST_ARRIVAL_TIME")]
-        public DateTime LatestArrivalTime { get; set; }
+        public TimeSpan LatestArrivalTime { get; set; }
 
         public CarpoolUser User { get; set; }
 

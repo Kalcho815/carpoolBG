@@ -9,8 +9,6 @@ using Microsoft.Identity.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 var startup = new Startup(builder.Configuration);
-//startup.ConfigureServices(builder.Services);
-
 
 builder.Services.AddRazorPages();
 builder.Services.AddControllers();
@@ -28,7 +26,9 @@ builder.Services.AddIdentity<CarpoolUser, UserRole>()
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"));
 
-builder.Services.AddTransient <UserService>();
+builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<RideService>();
+builder.Services.AddScoped<PreferencesService>();
 
 //builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

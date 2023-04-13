@@ -7,19 +7,19 @@ namespace carpoolBG.Controllers
 {
     [Route("user/[controller]")]
     [ApiController]
-    public class MakeUserActiveController : ControllerBase
+    public class PreferencesController : ControllerBase
     {
         private readonly IHttpContextAccessor httpContext;
         private readonly CarpoolContext dbContext;
         private readonly string? username;
         private CarpoolUser user;
-        UserService userService;
+        PreferencesService preferencesService;
 
-        public MakeUserActiveController(IHttpContextAccessor httpContext, CarpoolContext dbContext, UserService userService)
+        public PreferencesController(IHttpContextAccessor httpContext, CarpoolContext dbContext, PreferencesService preferencesService)
         {
             this.httpContext = httpContext;
             this.dbContext = dbContext;
-            this.userService = userService;
+            this.preferencesService = preferencesService;
             this.username = httpContext.HttpContext.User.Identity.Name;
 
             if (username != null)
@@ -30,17 +30,15 @@ namespace carpoolBG.Controllers
             }
         }
 
-        [HttpPost(Name = "MakeUserActive")]
-        public string Post()
+        [HttpPost(Name = "SetPreferences")]
+        public string Post([FromQuery] string preferredSex, int maximumRange, string earliestDepartureTime, string earliestArrivalTime, string latestDepartureTime, string latestArrivalTime)
         {
-            string result = null;
+            string result = "";
 
             if (user != null)
             {
-                result = userService.MakeUserActive(user);
+                result = preferencesService.SetPreferences(user, preferredSex, maximumRange, earliestDepartureTime, earliestArrivalTime, latestDepartureTime, latestArrivalTime);
             }
-            else
-                result = "";
 
             return result;
         }
